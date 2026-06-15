@@ -643,8 +643,8 @@
                   <h3><%= req.name %></h3>
                   <a href="mailto:<%= req.email %>" class="sender-email"><%= req.email %></a>
                 </div>
-                <div class="request-date">
-                  <%= new Date(req.createdAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %>
+                <div class="request-date request-date-local" data-date="<%= req.createdAt.toISOString() %>">
+                  <%= req.createdAt.toISOString() %>
                 </div>
               </div>
 
@@ -759,6 +759,20 @@
         alert('An error occurred. Please try again.');
       }
     }
+
+    // Format UTC dates to browser local time on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.request-date-local').forEach(el => {
+        const utcDateStr = el.getAttribute('data-date');
+        if (utcDateStr) {
+          const localDate = new Date(utcDateStr);
+          el.textContent = localDate.toLocaleString('en-US', { 
+            dateStyle: 'medium', 
+            timeStyle: 'short' 
+          });
+        }
+      });
+    });
   </script>
 
 </body>
