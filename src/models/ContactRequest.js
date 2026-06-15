@@ -21,6 +21,10 @@ const ContactRequestSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isArchived: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
